@@ -3,326 +3,694 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>2368 Luxury · Terms & Privacy</title>
-<meta name="description" content="Điều khoản dịch vụ và chính sách bảo mật của bot 2368 Luxury.">
+<title>2368 Luxury · Đỉnh Cao Bảo Mật & Quản Trị Discord</title>
+<meta name="description" content="2368 Luxury — Bot Discord all-in-one với 8 lớp bảo mật, moderation đầy đủ, backup/restore, quản trị server chuyên nghiệp.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⛩️</text></svg>">
 <style>
   :root{
-    --bg:#0b0b0f; --bg2:#121218; --card:#17171f; --border:#26262f;
-    --gold:#d4af37; --gold2:#f2d98a; --ruby:#c0304a; --ruby2:#e15b74;
-    --text:#e8e8ee; --muted:#9a9aa6; --accent:#8a6d1f;
+    --bg:#08080c; --bg2:#0f0f16; --card:#14141d; --card2:#1a1a25;
+    --border:#26262f; --border2:#33333f;
+    --gold:#d4af37; --gold2:#f2d98a; --gold3:#8a6d1f;
+    --ruby:#c0304a; --ruby2:#e15b74; --ruby3:#7a1f30;
+    --text:#eaeaf0; --muted:#8f8f9c; --dim:#5e5e6b;
+    --ok:#4ade80; --warn:#fbbf24; --danger:#ef4444;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
   body{
     font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
-    background:radial-gradient(ellipse at top,#1a1a24 0%,var(--bg) 55%);
-    color:var(--text); line-height:1.7; min-height:100vh;
-    -webkit-font-smoothing:antialiased;
+    background:var(--bg); color:var(--text); line-height:1.7;
+    overflow-x:hidden; -webkit-font-smoothing:antialiased;
   }
   body::before{
     content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
-    background:radial-gradient(circle at 20% 10%,rgba(212,175,55,.08),transparent 45%),
-               radial-gradient(circle at 80% 90%,rgba(192,48,74,.08),transparent 45%);
+    background:
+      radial-gradient(ellipse 900px 500px at 50% -10%,rgba(212,175,55,.13),transparent 60%),
+      radial-gradient(ellipse 700px 400px at 90% 40%,rgba(192,48,74,.09),transparent 60%),
+      radial-gradient(ellipse 700px 400px at 10% 70%,rgba(212,175,55,.06),transparent 60%);
   }
-  .wrap{position:relative; z-index:1; max-width:960px; margin:0 auto; padding:40px 24px 80px}
+  .grid-bg{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      linear-gradient(rgba(212,175,55,.025) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(212,175,55,.025) 1px,transparent 1px);
+    background-size:60px 60px;
+    mask-image:radial-gradient(ellipse at center,black 20%,transparent 75%);
+  }
 
-  header{text-align:center; margin-bottom:44px}
-  .logo{
-    font-size:44px; line-height:1;
+  /* NAV */
+  .nav{
+    position:sticky; top:0; z-index:100;
+    backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+    background:rgba(8,8,12,.75);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-inner{
+    max-width:1200px; margin:0 auto; padding:14px 24px;
+    display:flex; align-items:center; justify-content:space-between; gap:20px;
+  }
+  .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:1.5px; font-size:16px}
+  .brand .mark{font-size:22px}
+  .brand .txt{
+    background:linear-gradient(135deg,var(--gold2),var(--gold) 50%,var(--ruby2));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  }
+  .nav-links{display:flex; gap:22px; font-size:13.5px; letter-spacing:.4px}
+  .nav-links a{color:var(--muted); text-decoration:none; transition:color .2s}
+  .nav-links a:hover{color:var(--gold2)}
+  .cta{
+    padding:9px 20px; border-radius:999px; font-size:13px; font-weight:700; letter-spacing:.5px;
     background:linear-gradient(135deg,var(--gold2),var(--gold));
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-    background-clip:text;
+    color:#0b0b0f; text-decoration:none; white-space:nowrap;
+    box-shadow:0 6px 22px -10px var(--gold);
+    transition:transform .2s, box-shadow .2s;
   }
-  h1{
-    font-size:34px; letter-spacing:2px; margin-top:14px; font-weight:700;
-    background:linear-gradient(135deg,var(--gold2) 20%,var(--gold) 55%,var(--ruby2) 100%);
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-    background-clip:text;
+  .cta:hover{transform:translateY(-2px); box-shadow:0 12px 30px -10px var(--gold)}
+  .cta.ruby{
+    background:linear-gradient(135deg,var(--ruby2),var(--ruby));
+    color:#fff; box-shadow:0 6px 22px -10px var(--ruby);
   }
-  .sub{color:var(--muted); font-size:14px; letter-spacing:1px; margin-top:6px}
+  .cta.ruby:hover{box-shadow:0 12px 30px -10px var(--ruby)}
+  @media(max-width:820px){ .nav-links{display:none} }
 
-  nav{display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:32px}
-  nav a{
-    padding:10px 22px; border-radius:999px; font-size:14px; font-weight:600;
-    color:var(--muted); text-decoration:none; letter-spacing:.5px;
-    border:1px solid var(--border); background:var(--bg2);
-    transition:all .22s ease; cursor:pointer;
+  /* HERO */
+  .hero{position:relative; z-index:1; max-width:1200px; margin:0 auto; padding:90px 24px 70px; text-align:center}
+  .badge-top{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:7px 16px; border-radius:999px; font-size:12px; letter-spacing:1.2px; font-weight:600;
+    background:rgba(212,175,55,.08); border:1px solid rgba(212,175,55,.3); color:var(--gold2);
+    text-transform:uppercase; margin-bottom:26px;
   }
-  nav a:hover{color:var(--gold2); border-color:var(--gold)}
-  nav a.active{
-    color:#0b0b0f; border-color:transparent;
+  .badge-top .dot{
+    width:7px; height:7px; border-radius:50%; background:var(--ok);
+    box-shadow:0 0 10px var(--ok); animation:pulse 2s infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+  .hero h1{
+    font-size:clamp(38px,7vw,76px); line-height:1.05; letter-spacing:-1px;
+    font-weight:900; margin-bottom:22px;
+  }
+  .hero h1 .grad{
+    background:linear-gradient(135deg,var(--gold2) 0%,var(--gold) 40%,var(--ruby2) 100%);
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  }
+  .hero h1 .stroke{
+    -webkit-text-stroke:1.5px var(--gold2); -webkit-text-fill-color:transparent;
+  }
+  .hero p.lead{
+    max-width:720px; margin:0 auto 40px; font-size:17px; color:var(--muted); line-height:1.75;
+  }
+  .hero p.lead strong{color:var(--gold2); font-weight:600}
+
+  .hero-actions{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-bottom:56px}
+  .btn-primary{
+    padding:15px 34px; border-radius:12px; font-size:15px; font-weight:700; letter-spacing:.4px;
     background:linear-gradient(135deg,var(--gold2),var(--gold));
-    box-shadow:0 6px 22px -8px var(--gold);
+    color:#0b0b0f; text-decoration:none;
+    box-shadow:0 14px 40px -14px var(--gold);
+    transition:transform .2s, box-shadow .2s;
+    display:inline-flex; align-items:center; gap:10px;
   }
+  .btn-primary:hover{transform:translateY(-3px); box-shadow:0 20px 50px -14px var(--gold)}
+  .btn-ghost{
+    padding:15px 34px; border-radius:12px; font-size:15px; font-weight:700; letter-spacing:.4px;
+    background:transparent; color:var(--text); text-decoration:none;
+    border:1px solid var(--border2); transition:all .2s;
+    display:inline-flex; align-items:center; gap:10px;
+  }
+  .btn-ghost:hover{border-color:var(--gold); color:var(--gold2); transform:translateY(-3px)}
 
-  .page{display:none; animation:fade .3s ease}
-  .page.active{display:block}
-  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-
-  .card{
+  /* STATS BAR */
+  .stats{
+    position:relative; z-index:1;
+    max-width:1200px; margin:0 auto 20px; padding:0 24px;
+  }
+  .stats-inner{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    background:var(--border); border:1px solid var(--border); border-radius:16px;
+    overflow:hidden;
+  }
+  .stat{
     background:linear-gradient(160deg,var(--card),var(--bg2));
-    border:1px solid var(--border); border-radius:16px;
-    padding:28px 32px; margin-bottom:20px;
-    box-shadow:0 24px 60px -30px rgba(0,0,0,.8);
+    padding:30px 20px; text-align:center;
   }
-  .card h2{
-    font-size:20px; color:var(--gold2); margin-bottom:14px;
-    padding-bottom:10px; border-bottom:1px solid var(--border);
-    display:flex; align-items:center; gap:10px;
+  .stat .num{
+    font-size:38px; font-weight:900; letter-spacing:-1px;
+    background:linear-gradient(135deg,var(--gold2),var(--gold));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    line-height:1;
   }
-  .card h2::before{
-    content:''; width:4px; height:20px; border-radius:2px;
-    background:linear-gradient(var(--gold),var(--ruby));
-  }
-  .card h3{font-size:15px; color:var(--gold); margin:18px 0 8px}
-  .card p, .card li{color:#cfcfd8; font-size:14.5px}
-  .card ul{padding-left:22px; margin:10px 0}
-  .card li{margin:6px 0}
-  .card a{color:var(--gold2); text-decoration:none; border-bottom:1px dotted var(--accent)}
-  .card a:hover{color:var(--ruby2)}
-  .muted{color:var(--muted); font-size:13px}
+  .stat .lbl{font-size:11.5px; color:var(--muted); letter-spacing:1.2px; text-transform:uppercase; margin-top:10px; font-weight:600}
+  @media(max-width:700px){ .stats-inner{grid-template-columns:repeat(2,1fr)} .stat .num{font-size:30px} }
 
-  .endpoints{display:grid; gap:12px; margin-top:6px}
-  .endpoint{
-    display:flex; gap:14px; align-items:flex-start;
-    padding:14px 16px; border-radius:12px;
-    background:rgba(212,175,55,.04); border:1px solid var(--border);
+  /* SECTIONS */
+  .section{position:relative; z-index:1; max-width:1200px; margin:0 auto; padding:90px 24px}
+  .section-head{text-align:center; max-width:760px; margin:0 auto 60px}
+  .section-tag{
+    font-size:11.5px; letter-spacing:2.5px; font-weight:700; color:var(--gold);
+    text-transform:uppercase; margin-bottom:14px;
   }
-  .endpoint .icon{
-    flex-shrink:0; width:38px; height:38px; border-radius:10px;
-    display:grid; place-items:center; font-size:18px;
-    background:linear-gradient(135deg,rgba(212,175,55,.15),rgba(192,48,74,.15));
+  .section-head h2{
+    font-size:clamp(28px,4.5vw,46px); line-height:1.15; font-weight:900; letter-spacing:-.5px;
+    margin-bottom:16px;
+  }
+  .section-head h2 .grad{
+    background:linear-gradient(135deg,var(--gold2),var(--ruby2));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  }
+  .section-head p{color:var(--muted); font-size:16px}
+
+  /* FEATURE GRID */
+  .feat-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+  @media(max-width:900px){ .feat-grid{grid-template-columns:repeat(2,1fr)} }
+  @media(max-width:600px){ .feat-grid{grid-template-columns:1fr} }
+
+  .feat{
+    position:relative; padding:30px 26px; border-radius:16px;
+    background:linear-gradient(160deg,var(--card),var(--bg2));
+    border:1px solid var(--border); overflow:hidden;
+    transition:transform .25s, border-color .25s, box-shadow .25s;
+  }
+  .feat::before{
+    content:''; position:absolute; top:0; left:0; right:0; height:2px;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+    opacity:0; transition:opacity .25s;
+  }
+  .feat:hover{transform:translateY(-6px); border-color:var(--border2); box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
+  .feat:hover::before{opacity:1}
+  .feat .ic{
+    width:52px; height:52px; border-radius:13px; display:grid; place-items:center;
+    font-size:24px; margin-bottom:18px;
+    background:linear-gradient(135deg,rgba(212,175,55,.15),rgba(192,48,74,.12));
+    border:1px solid var(--border2);
+  }
+  .feat h3{font-size:17px; font-weight:700; color:var(--gold2); margin-bottom:10px; letter-spacing:.2px}
+  .feat p{font-size:14px; color:var(--muted); line-height:1.7}
+  .feat .tags{margin-top:16px; display:flex; flex-wrap:wrap; gap:6px}
+  .feat .tags span{
+    font-size:10.5px; padding:3px 9px; border-radius:6px; font-weight:600;
+    background:rgba(212,175,55,.08); color:var(--gold); border:1px solid rgba(212,175,55,.2);
+    letter-spacing:.3px;
+  }
+
+  /* SECURITY SHOWCASE */
+  .sec-wrap{
+    display:grid; grid-template-columns:1.1fr .9fr; gap:40px; align-items:center;
+  }
+  @media(max-width:900px){ .sec-wrap{grid-template-columns:1fr} }
+  .sec-list{display:grid; gap:12px}
+  .sec-item{
+    display:flex; gap:14px; padding:16px 18px; border-radius:12px;
+    background:linear-gradient(160deg,var(--card),var(--bg2));
+    border:1px solid var(--border);
+    transition:border-color .2s, transform .2s;
+  }
+  .sec-item:hover{border-color:var(--ruby); transform:translateX(4px)}
+  .sec-item .ico{
+    flex-shrink:0; width:40px; height:40px; border-radius:10px; display:grid; place-items:center;
+    font-size:18px;
+    background:linear-gradient(135deg,rgba(192,48,74,.15),rgba(212,175,55,.08));
+    border:1px solid var(--border2);
+  }
+  .sec-item .body{flex:1; min-width:0}
+  .sec-item .body strong{display:block; font-size:14.5px; color:var(--gold2); margin-bottom:3px}
+  .sec-item .body span{font-size:12.5px; color:var(--muted); line-height:1.5}
+
+  .sec-visual{
+    padding:36px; border-radius:20px;
+    background:
+      radial-gradient(circle at top right,rgba(192,48,74,.15),transparent 60%),
+      linear-gradient(160deg,var(--card),var(--bg2));
+    border:1px solid var(--border2);
+    box-shadow:0 40px 80px -40px rgba(0,0,0,.9);
+    text-align:center;
+  }
+  .shield{
+    width:120px; height:120px; margin:0 auto 24px;
+    display:grid; place-items:center; font-size:56px;
+    background:linear-gradient(135deg,var(--gold2),var(--gold) 50%,var(--ruby));
+    border-radius:30% 30% 50% 50%;
+    clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+    filter:drop-shadow(0 15px 30px rgba(212,175,55,.4));
+    animation:float 4s ease-in-out infinite;
+  }
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  .sec-visual h3{font-size:22px; font-weight:800; color:var(--gold2); margin-bottom:8px}
+  .sec-visual p{font-size:13.5px; color:var(--muted); line-height:1.7}
+
+  /* DASHBOARD MOCK */
+  .mock{
+    margin-top:60px; border-radius:20px; overflow:hidden;
+    border:1px solid var(--border2);
+    background:linear-gradient(180deg,#101018,#0b0b12);
+    box-shadow:0 50px 100px -40px rgba(0,0,0,.9);
+  }
+  .mock-bar{
+    display:flex; align-items:center; gap:8px; padding:14px 18px;
+    border-bottom:1px solid var(--border); background:rgba(255,255,255,.02);
+  }
+  .mock-bar .dot{width:11px; height:11px; border-radius:50%}
+  .mock-bar .dot.r{background:#ff5f57}
+  .mock-bar .dot.y{background:#febc2e}
+  .mock-bar .dot.g{background:#28c840}
+  .mock-bar .title{margin-left:14px; font-size:12px; color:var(--muted); letter-spacing:.5px}
+  .mock-body{padding:26px 30px}
+  .mock-head{display:flex; align-items:center; gap:12px; padding-bottom:16px; border-bottom:1px solid var(--border); margin-bottom:20px}
+  .mock-head .icon{font-size:24px}
+  .mock-head h4{font-size:15px; color:var(--gold2); font-weight:800; letter-spacing:.5px}
+  .mock-head .badge{
+    margin-left:auto; font-size:10.5px; padding:4px 12px; border-radius:999px;
+    background:rgba(74,222,128,.1); color:var(--ok); border:1px solid rgba(74,222,128,.3);
+    font-weight:700; letter-spacing:.5px;
+  }
+  .mock-modules{display:grid; grid-template-columns:repeat(2,1fr); gap:10px}
+  @media(max-width:600px){ .mock-modules{grid-template-columns:1fr} }
+  .mock-mod{
+    display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:10px;
+    background:rgba(255,255,255,.02); border:1px solid var(--border);
+    font-size:13px;
+  }
+  .mock-mod .status{
+    width:8px; height:8px; border-radius:50%; background:var(--ok);
+    box-shadow:0 0 8px var(--ok); flex-shrink:0;
+  }
+  .mock-mod span{flex:1; color:var(--text); font-weight:500}
+  .mock-mod code{font-size:11.5px; color:var(--gold); font-family:ui-monospace,monospace}
+
+  /* MODERATION BAND */
+  .band{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:40px;
+  }
+  @media(max-width:800px){ .band{grid-template-columns:repeat(2,1fr)} }
+  .band-item{
+    padding:22px 18px; border-radius:14px; text-align:center;
+    background:linear-gradient(160deg,var(--card),var(--bg2));
     border:1px solid var(--border);
   }
-  .endpoint .meta{flex:1; min-width:0}
-  .endpoint .meta strong{display:block; color:var(--gold2); font-size:14px; margin-bottom:4px}
-  .endpoint .meta code{
-    font-family:ui-monospace,Consolas,monospace; font-size:12.5px;
-    color:var(--ruby2); word-break:break-all;
-  }
-  .badge{
-    display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:.6px;
-    padding:3px 9px; border-radius:999px; margin-left:8px;
-    text-transform:uppercase;
-  }
-  .badge.need{background:rgba(192,48,74,.15); color:var(--ruby2); border:1px solid var(--ruby)}
-  .badge.ok{background:rgba(212,175,55,.12); color:var(--gold2); border:1px solid var(--accent)}
+  .band-item .em{font-size:26px; margin-bottom:10px}
+  .band-item h5{font-size:13.5px; color:var(--gold2); font-weight:700; margin-bottom:4px}
+  .band-item p{font-size:11.5px; color:var(--muted); line-height:1.5}
 
+  /* CTA FINAL */
+  .cta-final{
+    position:relative; z-index:1;
+    max-width:1200px; margin:0 auto; padding:0 24px 90px;
+  }
+  .cta-box{
+    padding:64px 40px; border-radius:26px; text-align:center; position:relative; overflow:hidden;
+    background:
+      radial-gradient(circle at 50% 0%,rgba(212,175,55,.18),transparent 60%),
+      radial-gradient(circle at 80% 100%,rgba(192,48,74,.15),transparent 60%),
+      linear-gradient(160deg,#15151d,#0c0c13);
+    border:1px solid var(--border2);
+    box-shadow:0 60px 120px -50px rgba(212,175,55,.35);
+  }
+  .cta-box h2{
+    font-size:clamp(26px,4vw,42px); font-weight:900; letter-spacing:-.5px; margin-bottom:16px;
+    background:linear-gradient(135deg,var(--gold2),var(--gold) 40%,var(--ruby2));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  }
+  .cta-box p{color:var(--muted); font-size:16px; max-width:600px; margin:0 auto 32px}
+  .cta-box .btns{display:flex; gap:14px; justify-content:center; flex-wrap:wrap}
+
+  /* FOOTER */
   footer{
-    text-align:center; margin-top:50px; padding-top:24px;
-    border-top:1px solid var(--border); color:var(--muted); font-size:12.5px; letter-spacing:.5px;
+    position:relative; z-index:1; border-top:1px solid var(--border);
+    padding:40px 24px; text-align:center; color:var(--dim); font-size:12.5px;
   }
   footer a{color:var(--gold2); text-decoration:none}
   footer a:hover{color:var(--ruby2)}
-
-  @media(max-width:600px){
-    h1{font-size:26px} .logo{font-size:34px}
-    .card{padding:20px 18px} .wrap{padding:24px 14px 60px}
+  footer .brand-mini{margin-bottom:14px; font-weight:800; letter-spacing:1.5px; font-size:14px}
+  footer .brand-mini span{
+    background:linear-gradient(135deg,var(--gold2),var(--ruby2));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
   }
+
+  .reveal{opacity:0; transform:translateY(30px); transition:opacity .7s ease, transform .7s ease}
+  .reveal.in{opacity:1; transform:none}
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <header>
-    <div class="logo">⛩️</div>
-    <h1>2368 LUXURY</h1>
-    <div class="sub">SECURITY · MODERATION · ALL-IN-ONE</div>
-  </header>
+<div class="grid-bg"></div>
 
-  <nav>
-    <a href="#home" class="active" data-page="home">Tổng quan</a>
-    <a href="#terms" data-page="terms">Điều khoản</a>
-    <a href="#privacy" data-page="privacy">Bảo mật</a>
-  </nav>
-
-  <!-- ══════════ HOME ══════════ -->
-  <section id="home" class="page active">
-    <div class="card">
-      <h2>Về 2368 Luxury</h2>
-      <p>
-        Bot Discord đa năng với <strong>8 lớp bảo vệ</strong> (anti-nuke, anti-raid, anti-spam, anti-link…),
-        hệ thống <strong>moderation</strong> đầy đủ, <strong>backup/restore</strong> cấu trúc server,
-        quản lý kênh – vai trò – voice, và nhiều tiện ích khác.
-      </p>
-      <p class="muted" style="margin-top:10px">
-        Khi thêm bot vào server, bạn đồng ý với <a href="#terms" data-page="terms">Điều khoản dịch vụ</a>
-        và <a href="#privacy" data-page="privacy">Chính sách bảo mật</a> dưới đây.
-      </p>
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="brand"><span class="mark">⛩️</span><span class="txt">2368 LUXURY</span></div>
+    <div class="nav-links">
+      <a href="#security">Bảo mật</a>
+      <a href="#moderation">Moderation</a>
+      <a href="#backup">Backup</a>
+      <a href="#tools">Tiện ích</a>
+      <a href="#tech">Kỹ thuật</a>
     </div>
+    <a class="cta" href="https://discord.gg/2368" target="_blank" rel="noopener">Thêm Bot</a>
+  </div>
+</nav>
 
-    <div class="card">
-      <h2>URL cần cấu hình trong Discord Developer Portal</h2>
-      <p class="muted" style="margin-bottom:12px">
-        Các trường dưới đây nằm trong <em>OAuth2 → General</em> và <em>General Information</em> của ứng dụng.
-      </p>
-      <div class="endpoints">
-        <div class="endpoint">
-          <div class="icon">⚡</div>
-          <div class="meta">
-            <strong>Interactions Endpoint URL <span class="badge need">Cần backend</span></strong>
-            <code>https://your-domain.com/api/interactions</code>
-            <div class="muted" style="margin-top:4px;font-size:12px">
-              Phải verify Ed25519 signature — HTML tĩnh <b>không</b> làm được, cần server (Node/Python).
-            </div>
-          </div>
+<!-- HERO -->
+<header class="hero">
+  <div class="badge-top"><span class="dot"></span> Online · All-in-One · Made in Vietnam</div>
+  <h1>
+    <span class="grad">Bảo Vệ</span> Như Pháo Đài<br>
+    <span class="stroke">Quản Trị</span> Như <span class="grad">Nghệ Thuật</span>
+  </h1>
+  <p class="lead">
+    <strong>2368 Luxury</strong> là bot Discord duy nhất bạn cần — <strong>8 lớp bảo vệ chủ động</strong>,
+    moderation chuyên sâu, backup cấu trúc toàn server, và hàng chục tiện ích quản trị.
+    Được thiết kế cho những server không chấp nhận sự cố.
+  </p>
+  <div class="hero-actions">
+    <a class="btn-primary" href="https://discord.gg/2368" target="_blank" rel="noopener">⛩️ Thêm vào server</a>
+    <a class="btn-ghost" href="#security">Khám phá tính năng →</a>
+  </div>
+</header>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-inner">
+    <div class="stat"><div class="num">8</div><div class="lbl">Lớp bảo mật</div></div>
+    <div class="stat"><div class="num">50+</div><div class="lbl">Lệnh chuyên sâu</div></div>
+    <div class="stat"><div class="num">v2</div><div class="lbl">Backup Engine</div></div>
+    <div class="stat"><div class="num">100%</div><div class="lbl">Miễn phí</div></div>
+  </div>
+</div>
+
+<!-- SECURITY -->
+<section class="section" id="security">
+  <div class="section-head reveal">
+    <div class="section-tag">SHIELD OF THE SERVER</div>
+    <h2>8 Lớp Bảo Vệ <span class="grad">Chủ Động</span></h2>
+    <p>Mỗi lớp hoạt động độc lập, phối hợp thành một pháo đài không có điểm mù. Dashboard điều khiển bằng nút bấm, không cần gõ lệnh.</p>
+  </div>
+
+  <div class="sec-wrap">
+    <div class="sec-list reveal">
+      <div class="sec-item">
+        <div class="ico">💥</div>
+        <div class="body">
+          <strong>Anti-Nuke</strong>
+          <span>Phát hiện mass ban/kick qua audit log. Hình phạt leo thang: gỡ role nguy hiểm → timeout 24h → kick → ban dựa trên lịch sử 7 ngày.</span>
         </div>
-        <div class="endpoint">
-          <div class="icon">🔗</div>
-          <div class="meta">
-            <strong>Linked Roles Verification URL <span class="badge need">Cần backend</span></strong>
-            <code>https://your-domain.com/api/verify</code>
-            <div class="muted" style="margin-top:4px;font-size:12px">
-              Trả về metadata role connection dạng JSON.
-            </div>
-          </div>
+      </div>
+      <div class="sec-item">
+        <div class="ico">📁</div>
+        <div class="body">
+          <strong>Anti-Channel</strong>
+          <span>Chặn xoá/tạo kênh hàng loạt. Tự khoá toàn server (panic lockdown) khi phát hiện dấu hiệu phá hoại.</span>
         </div>
-        <div class="endpoint">
-          <div class="icon">📜</div>
-          <div class="meta">
-            <strong>Terms of Service URL <span class="badge ok">HTML tĩnh OK</span></strong>
-            <code>https://your-domain.com/#terms</code>
-          </div>
+      </div>
+      <div class="sec-item">
+        <div class="ico">🚨</div>
+        <div class="body">
+          <strong>Anti-Raid</strong>
+          <span>Phát hiện làn sóng join bất thường. Kích hoạt panic lockdown + kick tự động các account mới tạo &lt;14 ngày.</span>
         </div>
-        <div class="endpoint">
-          <div class="icon">🔒</div>
-          <div class="meta">
-            <strong>Privacy Policy URL <span class="badge ok">HTML tĩnh OK</span></strong>
-            <code>https://your-domain.com/#privacy</code>
-          </div>
+      </div>
+      <div class="sec-item">
+        <div class="ico">🤖</div>
+        <div class="body">
+          <strong>Anti-Bot &amp; Webhook</strong>
+          <span>Bot lạ được thêm không qua owner → kick ngay. Webhook trái phép → xoá + phạt người tạo.</span>
+        </div>
+      </div>
+      <div class="sec-item">
+        <div class="ico">💬</div>
+        <div class="body">
+          <strong>Anti-Spam</strong>
+          <span>Đếm tin theo cửa sổ thời gian. Vượt ngưỡng → xoá tin + purge 20 tin gần nhất của kẻ spam.</span>
+        </div>
+      </div>
+      <div class="sec-item">
+        <div class="ico">🔗</div>
+        <div class="body">
+          <strong>Anti-Link</strong>
+          <span>Bắt mọi dạng: http/https, www, bare domain, IPv4, markdown link, obfuscated (<code>hxxp</code>, <code>[.]</code>). Whitelist domain linh hoạt.</span>
+        </div>
+      </div>
+      <div class="sec-item">
+        <div class="ico">🔠</div>
+        <div class="body">
+          <strong>Anti-Caps &amp; Markup</strong>
+          <span>Chặn CAPS &gt;70%, header markdown <code>#</code>, bold-underline <code>__</code> — những chiêu làm loãng kênh.</span>
+        </div>
+      </div>
+      <div class="sec-item">
+        <div class="ico">📢</div>
+        <div class="body">
+          <strong>Anti-Mention &amp; Ghost Ping</strong>
+          <span>Chặn tag hàng loạt, @everyone/@here, và cả ghost ping (tag rồi xoá tin để tránh bị phát hiện).</span>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- ══════════ TERMS ══════════ -->
-  <section id="terms" class="page">
-    <div class="card">
-      <h2>Điều khoản dịch vụ</h2>
-      <p class="muted">Cập nhật lần cuối: <strong>26/10/2026</strong></p>
-
-      <h3>1. Chấp nhận điều khoản</h3>
-      <p>Khi thêm bot <strong>2368 Luxury</strong> ("Bot") vào server Discord hoặc sử dụng bất kỳ lệnh nào của Bot,
-         bạn đồng ý bị ràng buộc bởi các điều khoản này. Nếu không đồng ý, hãy gỡ Bot khỏi server.</p>
-
-      <h3>2. Phạm vi sử dụng</h3>
-      <ul>
-        <li>Bot cung cấp tính năng bảo mật, moderation, backup và tiện ích cho server Discord.</li>
-        <li>Bạn phải tuân thủ <a href="https://discord.com/terms" target="_blank" rel="noopener">Điều khoản Discord</a> và <a href="https://discord.com/guidelines" target="_blank" rel="noopener">Nguyên tắc cộng đồng</a>.</li>
-        <li>Không sử dụng Bot để spam, tấn công, hoặc gây hại cho server/bot khác.</li>
-      </ul>
-
-      <h3>3. Trách nhiệm người dùng</h3>
-      <ul>
-        <li>Bạn tự chịu trách nhiệm về các hành động thực hiện bởi tài khoản có quyền quản trị trong server của bạn.</li>
-        <li>Không lạm dụng tính năng mass-action (rolemass, ban, purge…) để phá hoại dữ liệu.</li>
-        <li>Việc cấu hình sai (ví dụ bật <em>clean restore</em>) có thể xóa cấu trúc server — Bot không chịu trách nhiệm.</li>
-      </ul>
-
-      <h3>4. Giới hạn trách nhiệm</h3>
-      <p>Bot được cung cấp <strong>"nguyên trạng"</strong>. Chủ bot không đảm bảo hoạt động liên tục, không lỗi,
-         và không chịu trách nhiệm cho bất kỳ thiệt hại trực tiếp hoặc gián tiếp nào phát sinh từ việc sử dụng Bot.</p>
-
-      <h3>5. Chấm dứt</h3>
-      <p>Chủ bot có quyền tạm ngưng hoặc chấm dứt quyền truy cập của bất kỳ server/người dùng nào vi phạm điều khoản, không cần báo trước.</p>
-
-      <h3>6. Thay đổi điều khoản</h3>
-      <p>Điều khoản có thể được cập nhật bất kỳ lúc nào. Việc tiếp tục sử dụng Bot sau khi cập nhật đồng nghĩa với việc chấp nhận điều khoản mới.</p>
-
-      <h3>7. Liên hệ</h3>
-      <p>Mọi thắc mắc xin liên hệ qua support server: <a href="https://discord.gg/2368" target="_blank" rel="noopener">discord.gg/2368</a></p>
+    <div class="sec-visual reveal">
+      <div class="shield">🛡️</div>
+      <h3>Panic Lockdown</h3>
+      <p>
+        Khi có sự cố nghiêm trọng, bot tự động: khoá toàn bộ kênh · xoá sạch invite ·
+        kick account mới · ghi log critical. Một cú bấm, cả server an toàn.
+      </p>
     </div>
-  </section>
+  </div>
 
-  <!-- ══════════ PRIVACY ══════════ -->
-  <section id="privacy" class="page">
-    <div class="card">
-      <h2>Chính sách bảo mật</h2>
-      <p class="muted">Cập nhật lần cuối: <strong>26/10/2026</strong></p>
-
-      <h3>1. Dữ liệu chúng tôi thu thập</h3>
-      <ul>
-        <li><strong>ID server (Guild ID)</strong>, <strong>ID kênh</strong>, <strong>ID vai trò</strong> — dùng để lưu cấu hình.</li>
-        <li><strong>ID người dùng</strong> — cho whitelist, AFK, warning, modlog, prefix.</li>
-        <li><strong>Nội dung tin nhắn</strong> — <em>chỉ xử lý tạm thời</em> trong bộ nhớ để phát hiện spam/link/caps/mention, <strong>không lưu trữ vĩnh viễn</strong>.</li>
-        <li><strong>Nhật ký moderation</strong> (warn, kick, ban, timeout) — lưu trên server để tra cứu.</li>
-        <li><strong>Audit log IDs</strong> — để tránh xử lý trùng sự kiện.</li>
-      </ul>
-
-      <h3>2. Dữ liệu chúng tôi KHÔNG thu thập</h3>
-      <ul>
-        <li>Không thu thập email, mật khẩu, token, hay thông tin thanh toán.</li>
-        <li>Không đọc tin nhắn riêng tư (DM) trừ khi bạn chủ động gửi lệnh cho Bot.</li>
-        <li>Không theo dõi hoạt động ngoài phạm vi server có Bot.</li>
-      </ul>
-
-      <h3>3. Mục đích sử dụng</h3>
-      <ul>
-        <li>Vận hành tính năng bảo mật, moderation, backup, tiện ích.</li>
-        <li>Hiển thị thông tin cho admin server (modlog, warning list, whitelist).</li>
-        <li>Không bán, không chia sẻ dữ liệu cho bên thứ ba vì mục đích thương mại.</li>
-      </ul>
-
-      <h3>4. Lưu trữ & bảo mật</h3>
-      <ul>
-        <li>Dữ liệu lưu trong database SQLite cục bộ trên máy chủ bot.</li>
-        <li>Chỉ chủ bot có quyền truy cập trực tiếp.</li>
-        <li>Dữ liệu được giữ cho đến khi bạn yêu cầu xóa hoặc gỡ Bot khỏi server.</li>
-      </ul>
-
-      <h3>5. Quyền của bạn</h3>
-      <ul>
-        <li><strong>Xem dữ liệu:</strong> liên hệ support để được cung cấp bản ghi liên quan đến ID của bạn.</li>
-        <li><strong>Xóa dữ liệu:</strong> yêu cầu xóa toàn bộ dữ liệu của server/user — sẽ được xử lý trong vòng 7 ngày.</li>
-        <li><strong>Gỡ Bot:</strong> xóa Bot khỏi server, dữ liệu cấu hình sẽ được xóa theo định kỳ.</li>
-      </ul>
-
-      <h3>6. Cookie &amp; tracking</h3>
-      <p>Trang web này là HTML tĩnh, <strong>không</strong> sử dụng cookie, không có analytics, không tracking.</p>
-
-      <h3>7. Trẻ em</h3>
-      <p>Bot không dành cho người dùng dưới 13 tuổi (hoặc độ tuổi tối thiểu theo luật quốc gia của bạn).</p>
-
-      <h3>8. Thay đổi chính sách</h3>
-      <p>Chính sách có thể được cập nhật; phiên bản mới sẽ được đăng tại trang này.</p>
-
-      <h3>9. Liên hệ</h3>
-      <p>Yêu cầu về dữ liệu: <a href="https://discord.gg/2368" target="_blank" rel="noopener">discord.gg/2368</a></p>
+  <!-- DASHBOARD MOCK -->
+  <div class="mock reveal">
+    <div class="mock-bar">
+      <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+      <div class="title">/security setup — Dashboard</div>
     </div>
-  </section>
+    <div class="mock-body">
+      <div class="mock-head">
+        <div class="icon">⛩️</div>
+        <h4>SECURITY DASHBOARD</h4>
+        <div class="badge">● TỔNG: BẬT</div>
+      </div>
+      <div class="mock-modules">
+        <div class="mock-mod"><span class="status"></span><span>Anti-Nuke</span><code>3 / 20s</code></div>
+        <div class="mock-mod"><span class="status"></span><span>Anti-Channel</span><code>3 / 15s</code></div>
+        <div class="mock-mod"><span class="status"></span><span>Anti-Raid</span><code>50 / 30s</code></div>
+        <div class="mock-mod"><span class="status"></span><span>Anti-Bot &amp; Webhook</span><code>auto</code></div>
+        <div class="mock-mod"><span class="status"></span><span>Anti-Spam</span><code>3 / 5s</code></div>
+        <div class="mock-mod"><span class="status"></span><span>Anti-Link</span><code>all</code></div>
+        <div class="mock-mod"><span class="status"></span><span>Anti-Caps</span><code>70%</code></div>
+        <div class="mock-mod"><span class="status"></span><span>Anti-Mention</span><code>4 / 10s</code></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <footer>
-    ⛩️ <strong>2368 Luxury</strong> · Security First · Black / Ruby / Gold<br>
-    © 2026 · <a href="#terms" data-page="terms">Terms</a> · <a href="#privacy" data-page="privacy">Privacy</a> · <a href="https://discord.gg/2368" target="_blank" rel="noopener">Support</a>
-  </footer>
+<!-- MODERATION -->
+<section class="section" id="moderation">
+  <div class="section-head reveal">
+    <div class="section-tag">MODERATION SUITE</div>
+    <h2>Kiểm Duyệt <span class="grad">Toàn Diện</span></h2>
+    <p>Không chỉ xoá tin — hệ thống moderation được thiết kế với hierarchy check tự động, ghi modlog và hệ thống warning 3 nấc leo thang.</p>
+  </div>
+
+  <div class="feat-grid reveal">
+    <div class="feat">
+      <div class="ic">⚖️</div>
+      <h3>Hệ thống Warn 3 nấc</h3>
+      <p>Nấc 1 cảnh cáo · Nấc 2 timeout 1h · Nấc 3 timeout 24h. Tự động DM cho người bị xử, ghi log vào database và modlog channel.</p>
+      <div class="tags"><span>warn</span><span>warnings</span><span>clearwarn</span></div>
+    </div>
+    <div class="feat">
+      <div class="ic">🔨</div>
+      <h3>Ban · Kick · Timeout</h3>
+      <p>Hierarchy check tự động — không cho phép đụng role cao hơn. Hỗ trợ xoá tin theo ngày khi ban, timeout tối đa 28 ngày.</p>
+      <div class="tags"><span>ban</span><span>kick</span><span>timeout</span><span>untimeout</span></div>
+    </div>
+    <div class="feat">
+      <div class="ic">🧹</div>
+      <h3>Purge &amp; Slowmode</h3>
+      <p>Xoá tới 100 tin/lần, có reason trong audit log. Slowmode tới 6 giờ, kiểm tra channel type trước khi thao tác.</p>
+      <div class="tags"><span>purge</span><span>slowmode</span></div>
+    </div>
+    <div class="feat">
+      <div class="ic">🔒</div>
+      <h3>Lock / Unlock</h3>
+      <p>Khoá kênh riêng lẻ hoặc <strong>lockall</strong> toàn server khi có sự cố. Mở khoá thông minh, bỏ qua kênh không bị khoá bởi bot.</p>
+      <div class="tags"><span>lock</span><span>unlock</span><span>lockall</span><span>unlockall</span></div>
+    </div>
+    <div class="feat">
+      <div class="ic">📋</div>
+      <h3>Banlist &amp; Unbanall</h3>
+      <p>Xem danh sách ban với lý do, gỡ ban hàng loạt khi cần reset. Kiểm tra ID hợp lệ, báo lỗi rõ ràng.</p>
+      <div class="tags"><span>banlist</span><span>unban</span><span>unbanall</span></div>
+    </div>
+    <div class="feat">
+      <div class="ic">📝</div>
+      <h3>Modlog Tự Động</h3>
+      <p>Mọi hành động moderation đều được ghi lại vào database + gửi vào channel modlog. Không có gì bị bỏ sót.</p>
+      <div class="tags"><span>audit</span><span>modlog</span><span>history</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- BACKUP -->
+<section class="section" id="backup">
+  <div class="section-head reveal">
+    <div class="section-tag">BACKUP ENGINE v2</div>
+    <h2>Sao Lưu <span class="grad">Không Giới Hạn</span></h2>
+    <p>Chụp toàn bộ cấu trúc server — role, category, channel, emoji, sticker, ban, database. Khôi phục linh hoạt với 3 chế độ.</p>
+  </div>
+
+  <div class="feat-grid reveal">
+    <div class="feat">
+      <div class="ic">📸</div>
+      <h3>Snapshot Toàn Diện</h3>
+      <p>Roles (permissions, màu, icon, unicode emoji), categories, channels (topic, slowmode, bitrate, tags, layout), emojis, stickers, bans — tất cả trong một file JSON có checksum SHA-256.</p>
+      <div class="tags"><span>backup create</span><span>manifest</span></div>
+    </div>
+    <div class="feat">
+      <div class="ic">🔄</div>
+      <h3>Restore 3 Chế Độ</h3>
+      <p><strong>Soft</strong> (chỉ thêm thiếu) · <strong>Clean</strong> (xoá hết rồi tạo lại) · <strong>Dry-run</strong> (chỉ báo cáo). Có nút xác nhận, không sợ bấm nhầm.</p>
+      <div class="tags"><span>soft</span><span>clean</span><span>dry</span></div>
+    </div>
+    <div class="feat">
+      <div class="ic">🔍</div>
+      <h3>Inspect &amp; Compare</h3>
+      <p>Soi chi tiết từng role/channel với permission count. So 2 bản backup để biết cái gì đã đổi.</p>
+      <div class="tags"><span>inspect</span><span>compare</span></div>
+    </div>
+    <div class="feat">
+      <div class="ic">👥</div>
+      <h3>Rolemass</h3>
+      <p>Cấp/gỡ role hàng loạt tới 5000 member. Có nút <strong>Dừng giữa lúc chạy</strong>, báo cáo ok/skip/fail chi tiết.</p>
+      <div class="tags"><span>rolemass add</span><span>rolemass remove</span></div>
+    </div>
+    <div class="feat">
+      <div class="ic">⚡</div>
+      <h3>AutoRole</h3>
+      <p>Tự động cấp role cho member mới tham gia. Kiểm tra hierarchy trước khi cấp, im lặng nếu role không hợp lệ.</p>
+      <div class="tags"><span>autorole setup</span><span>autorole disable</span></div>
+    </div>
+    <div class="feat">
+      <div class="ic">🛡️</div>
+      <h3>Atomic &amp; Checksum</h3>
+      <p>Ghi file atomic (không hỏng khi crash), checksum SHA-256 mọi file, path traversal protection — code cấp production.</p>
+      <div class="tags"><span>atomic</span><span>sha256</span><span>safe-path</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section class="section" id="tools">
+  <div class="section-head reveal">
+    <div class="section-tag">SERVER TOOLS</div>
+    <h2>Bộ Công Cụ <span class="grad">Quản Trị</span></h2>
+    <p>Từ channel, role, voice đến steal emoji — mọi thứ admin cần, đóng gói trong một bot.</p>
+  </div>
+
+  <div class="band reveal">
+    <div class="band-item"><div class="em">📁</div><h5>Quản lý kênh</h5><p>Create · delete · rename · clone · info chi tiết</p></div>
+    <div class="band-item"><div class="em">🎭</div><h5>Quản lý role</h5><p>Add · remove · create · info với permission đầy đủ</p></div>
+    <div class="band-item"><div class="em">🔊</div><h5>Voice Manager</h5><p>Create · rename · limit · lock · unlock</p></div>
+    <div class="band-item"><div class="em">🎨</div><h5>Steal Emoji</h5><p>Lấy emoji/sticker/ảnh từ bất kỳ server nào</p></div>
+  </div>
+
+  <div class="band reveal" style="margin-top:14px">
+    <div class="band-item"><div class="em">👤</div><h5>User Info</h5><p>Hồ sơ chi tiết: role, quyền, voice, mutual</p></div>
+    <div class="band-item"><div class="em">🏰</div><h5>Server Info</h5><p>Tổng quan: boost, features, kênh, emoji, assets</p></div>
+    <div class="band-item"><div class="em">🔍</div><h5>Role Check</h5><p>Soi thứ bậc, quyền nguy hiểm, perms kênh</p></div>
+    <div class="band-item"><div class="em">💬</div><h5>AFK System</h5><p>Đặt AFK, tự báo khi bị tag, tự gỡ khi trả lời</p></div>
+  </div>
+
+  <div class="band reveal" style="margin-top:14px">
+    <div class="band-item"><div class="em">⌨️</div><h5>Prefix Riêng</h5><p>Mỗi server một prefix, giữ mặc định làm dự phòng</p></div>
+    <div class="band-item"><div class="em">📖</div><h5>Help Center</h5><p>Menu tương tác, hướng dẫn từng lệnh chi tiết</p></div>
+    <div class="band-item"><div class="em">📨</div><h5>DM Hàng Loạt</h5><p>Gửi tin cho member hoặc toàn bộ role</p></div>
+    <div class="band-item"><div class="em">📊</div><h5>Ping &amp; Status</h5><p>Latency, uptime, shard, guilds, extensions</p></div>
+  </div>
+</section>
+
+<!-- TECH -->
+<section class="section" id="tech">
+  <div class="section-head reveal">
+    <div class="section-tag">UNDER THE HOOD</div>
+    <h2>Kỹ Thuật <span class="grad">Cấp Production</span></h2>
+    <p>Không phải bot hobby — code được viết với tư duy hệ thống: fail-safe, retry, cooldown, checksum.</p>
+  </div>
+
+  <div class="feat-grid reveal">
+    <div class="feat">
+      <div class="ic">⚙️</div>
+      <h3>Retry Thông Minh</h3>
+      <p>Tự retry khi gặp 429/5xx, exponential backoff tới 8 giây. Không bỏ dở giữa chừng khi Discord rate limit.</p>
+    </div>
+    <div class="feat">
+      <div class="ic">🧠</div>
+      <h3>Cache &amp; Cleanup</h3>
+      <p>Task dọn rác mỗi 8 phút. Message tracking, join times, sanction history — tất cả có TTL rõ ràng, không rò rỉ memory.</p>
+    </div>
+    <div class="feat">
+      <div class="ic">🔐</div>
+      <h3>Permission Tiers</h3>
+      <p>4 cấp: Member → Mod → Admin → Owner. Kiểm tra quyền chính xác, không cho phép self-promote hay bypass.</p>
+    </div>
+    <div class="feat">
+      <div class="ic">🗂️</div>
+      <h3>Whitelist 4 Loại</h3>
+      <p>Role, channel, category, domain — mỗi loại bật/tắt độc lập. Category áp dụng cho toàn bộ kênh con.</p>
+    </div>
+    <div class="feat">
+      <div class="ic">🎯</div>
+      <h3>Audit Lock</h3>
+      <p>Query audit log có lock + delay thông minh, tránh trùng lặp sự kiện, có dedup bằng DB.</p>
+    </div>
+    <div class="feat">
+      <div class="ic">🛠️</div>
+      <h3>Error Handling</h3>
+      <p>Mọi exception được log, không crash cog. Interaction fail → fallback followup, silent fail cho ephemeral.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<div class="cta-final">
+  <div class="cta-box reveal">
+    <h2>Sẵn sàng nâng cấp server?</h2>
+    <p>Thêm 2368 Luxury ngay — miễn phí, không quảng cáo, không giới hạn tính năng. Cộng đồng hỗ trợ tiếng Việt 24/7.</p>
+    <div class="btns">
+      <a class="btn-primary" href="https://discord.gg/2368" target="_blank" rel="noopener">⛩️ Thêm Bot vào Server</a>
+      <a class="btn-ghost" href="https://discord.gg/2368" target="_blank" rel="noopener">💬 Vào Support Server</a>
+    </div>
+  </div>
 </div>
 
+<!-- FOOTER -->
+<footer>
+  <div class="brand-mini"><span>⛩️ 2368 LUXURY</span></div>
+  Security First · Black / Ruby / Gold<br><br>
+  <a href="#security">Bảo mật</a> · <a href="#moderation">Moderation</a> · <a href="#backup">Backup</a> ·
+  <a href="#tools">Tiện ích</a> · <a href="https://discord.gg/2368" target="_blank" rel="noopener">Support</a>
+  <br><br>
+  <span style="color:var(--dim)">© 2026 2368 Luxury · Made with ⛩️ in Vietnam</span>
+</footer>
+
 <script>
-  (function(){
-    const pages = document.querySelectorAll('.page');
-    const links = document.querySelectorAll('[data-page]');
+  // Scroll reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-    function show(id){
-      id = (id || 'home').replace('#','');
-      if(!document.getElementById(id)) id = 'home';
-      pages.forEach(p => p.classList.toggle('active', p.id === id));
-      document.querySelectorAll('nav a').forEach(a =>
-        a.classList.toggle('active', a.dataset.page === id)
-      );
-      window.scrollTo({top:0, behavior:'smooth'});
-    }
-
-    links.forEach(a => a.addEventListener('click', e => {
-      e.preventDefault();
-      const id = a.dataset.page;
-      history.replaceState(null, '', '#' + id);
-      show(id);
-    }));
-
-    window.addEventListener('hashchange', () => show(location.hash));
-    show(location.hash);
-  })();
+  // Nav smooth scroll offset
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href');
+      if (id.length > 1 && document.querySelector(id)) {
+        e.preventDefault();
+        const target = document.querySelector(id);
+        const top = target.getBoundingClientRect().top + window.scrollY - 70;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
 </script>
 </body>
 </html>
